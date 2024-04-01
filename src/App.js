@@ -1,24 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import ArticleList from "./components/article/ArticleList";
+import ArticleItem from "./components/article/ArticleItem";
+import NewArticle  from "./components/article/NewArticle";
+import EditArticle from "./components/article/EditArticle";
+import RegisterForm from "./components/user/RegisterForm";
+
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="articles">
+          <Route index element={<ArticleList />} />
+          <Route path=":articleId" element={<ArticleItem />} />
+          <Route path="new" element={<NewArticle />} />
+          <Route path=":articleId/edit" element={<EditArticle />} />
+        </Route>
+        <Route path="user">
+          <Route path="register" element={<RegisterForm />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 

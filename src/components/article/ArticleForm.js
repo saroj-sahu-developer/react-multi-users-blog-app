@@ -1,13 +1,9 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { updateArticle, createArticle } from "../../utils/handle_api_calls";
 
 function ArticleForm({ article }) {
-  console.log('ArticleForm rendered.')
-  // const [inputs, setInputs] = useState({
-  //   title: article.title || '',
-  //   body: article.body || ''
-  // });  
+  console.log('ArticleForm rendered.')  
   const [inputs, setInputs] = useState({});
 
   useEffect(() => {
@@ -27,25 +23,20 @@ function ArticleForm({ article }) {
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log(inputs);
-
-    try {
-      if (article) {
-        // If editing an existing article
-        await axios.put(`http://127.0.0.1:3000/articles/${article.id}`, inputs);
+    if (article) {
+      // If editing an existing article
+      updateArticle(article.id, inputs)
+      .then( () => {
         navigate(`/articles/${article.id}`);
-      } else {
-        // If creating a new article
-        await axios.post('http://127.0.0.1:3000/articles', inputs)
-        .then(response => {
-          const newArticle = response.data;
-          navigate(`/articles/${newArticle.id}`);
-        });
-      }  
-    } catch (error) {
-      console.log('Error submitting article:', error);
-    }
+      });
+    } else {
+      // If creating a new article
+      createArticle(inputs)
+      .then(newArticle => {
+        navigate(`/articles/${newArticle.id}`);
+      })
+    }  
   };
-
 
   return (
     <form onSubmit={handleSubmit}>

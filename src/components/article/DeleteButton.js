@@ -1,13 +1,12 @@
-import axios from "axios";
 import { useNavigate } from 'react-router-dom';
+import { deleteArticle } from '../../utils/handle_api_calls';
 
 function DeleteButton({ articleId}) {
   const navigate = useNavigate();
   
   async function handleDelete(articleId) {
     try {
-      await axios.delete(`http://localhost:3000/articles/${articleId}`);      
-      console.log('Article deleted successfully.');
+      deleteArticle(articleId);
       navigate('/articles');
     } catch (error) {
       console.error('Error deleting article:', error);

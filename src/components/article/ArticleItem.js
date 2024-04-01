@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import DeleteButton from './DeleteButton';
 import EditButton from './EditButton';
+import { getArticle } from '../../utils/handle_api_calls';
 
 function ArticleItem() {
   const [article, setArticle] = useState(null);
@@ -11,15 +11,13 @@ function ArticleItem() {
   const articleId = params.articleId;
 
   useEffect(() => {
-    axios
-      .get(`http://127.0.0.1:3000/articles/${articleId}`)
-      .then(response => {
-        console.log(response);
-        setArticle(response.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    getArticle(articleId)
+    .then(response => {
+      setArticle(response);
+    })
+    .catch(error => {
+      console.error('Error fetching article:', error);
+    });
   }, [articleId]);
 
   return (

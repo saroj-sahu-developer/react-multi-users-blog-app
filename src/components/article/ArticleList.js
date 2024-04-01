@@ -1,22 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { Link } from 'react-router-dom'; 
 import NewButton from './NewButton';
+import { getAllArticles } from '../../utils/handle_api_calls';
 
 function ArticleList() {
   console.log("component ArticleList rendered.");
   const [articles, setArticles] = useState([]);
 
   useEffect(() => {
-    axios
-      .get('http://127.0.0.1:3000/articles')
-      .then(response => {
-        console.log(response);
-        setArticles(response.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    getAllArticles()
+    .then(response => {
+      setArticles(response);
+    })
+    .catch(error => {
+      console.error('Error fetching article:', error);
+    });
   }, []);
 
   return (

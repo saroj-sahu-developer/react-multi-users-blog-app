@@ -5,22 +5,48 @@ const setTokenInHeader = (() => {
   axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
 })
 
+// const api = axios.create({
+//   baseURL: API_BASE_URL,
+// });
+// api.interceptors.response.use(
+//   response => response,
+//   error => {
+//     if (error.response.status === 401) {
+//       window.location.replace(`http://127.0.0.1:3001/user/register`);
+//     }
+//     return Promise.reject(error);
+//   },
+// );
+
 const handleUnAuthorizedRequest = () => {
   window.location.replace(`http://127.0.0.1:3001/user/register`);
 }
 
 export const registerUser = async(userDetails) => {
   try {
-    await axios.post(`${API_BASE_URL}/user/register`, userDetails)
+    return await axios.post(`${API_BASE_URL}/user/register`, userDetails)
     .then(response => {
       console.log(response);
-      const { token } = response.data;
-      localStorage.setItem('token', token);
+      return response;
     });
   } catch (error) {
     console.log('Error submitting register form:', error);
   }
 }
+
+export const loginUser = async(loginDetails) => {
+  try {
+    return await axios.post(`${API_BASE_URL}/user/login`, loginDetails)
+    .then(response => {
+      console.log(response);
+      return response;
+    });
+  } catch (error) {
+    console.log('Error submitting register form:', error);
+  }
+}
+
+
 
 export const getArticle = (articleId) => {
   setTokenInHeader();

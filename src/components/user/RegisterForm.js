@@ -16,7 +16,11 @@ function RegisterForm() {
     e.preventDefault();
     console.log(formData);
     validateForm();
-    registerUser(formData);
+    registerUser(formData)
+    .then( (response) => {
+      const { token } = response.data;
+      localStorage.setItem('token', token);
+    });
   };
 
   const validateForm = () => {

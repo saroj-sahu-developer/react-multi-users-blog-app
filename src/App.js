@@ -4,6 +4,7 @@ import ArticleItem from "./components/article/ArticleItem";
 import NewArticle  from "./components/article/NewArticle";
 import EditArticle from "./components/article/EditArticle";
 import RegisterForm from "./components/user/RegisterForm";
+import LoginForm from "./components/session/LoginForm";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -19,6 +20,7 @@ function App() {
         </Route>
         <Route path="user">
           <Route path="register" element={<RegisterForm />} />
+          <Route path="login" element={<LoginForm />} />
         </Route>
       </Routes>
     </BrowserRouter>

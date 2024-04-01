@@ -10,7 +10,9 @@ function ArticleList() {
   useEffect(() => {
     getAllArticles()
     .then(response => {
-      setArticles(response);
+      if(response) {
+        setArticles(response);
+      }
     })
     .catch(error => {
       console.error('Error fetching article:', error);

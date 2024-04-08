@@ -1,7 +1,8 @@
 import React, {useState} from 'react'
-import { createComment } from '../../utils/handle_api_calls';
+import { post } from '../../utils/api_calls/handle_api_calls';
 
 const AddComment = ({articleId, onCommentAdded}) => {
+  // console.log("add comment rendered.");
   const [comment, setComment] = useState('');
 
   const handleChange = (e) => {
@@ -11,9 +12,13 @@ const AddComment = ({articleId, onCommentAdded}) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // console.log(comment);
-    createComment(articleId, {body: comment})
-    .then(() => {
-      onCommentAdded();
+    post(`/articles/${articleId}/comments`, {body: comment})
+    .then((response) => {
+      onCommentAdded(response.data);
+      setComment('');
+    })
+    .catch(error => {
+      console.log("Error while creating comment: ", error);
     });
   };
 

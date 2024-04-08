@@ -1,5 +1,5 @@
 import React from 'react'
-import { updateArticle } from '../../utils/handle_api_calls';
+import { put } from '../../utils/api_calls/handle_api_calls';
 import { useNavigate } from 'react-router-dom';
 
 const UnarchiveButton = ({articleId}) => {
@@ -7,9 +7,12 @@ const UnarchiveButton = ({articleId}) => {
 
   const handleClick = () => {
     const inputs = {status: 'public'};
-    updateArticle(articleId, inputs)
+    put(`/articles/${articleId}`, inputs)
     .then(() => {
         navigate(`/articles/${articleId}`);
+    })
+    .catch(error => {
+      console.log("Error while unacrhive the article: ", error);
     });
   }
 

@@ -21,7 +21,7 @@ function App() {
           <Route path=":articleId" element={<ArticleItem />} />
           <Route path="new" element={<NewArticle />} />
           <Route path=":articleId/edit" element={<EditArticle />} />
-          <Route path="your-articles" element={<MyArticles />} />
+          <Route path="my-articles" element={<MyArticles />} />
         </Route>
         <Route path="user">
           <Route path="register" element={<RegisterForm />} />

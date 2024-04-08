@@ -1,18 +1,6 @@
-import React, {useState, useEffect} from 'react'
-import { getComments } from '../../utils/handle_api_calls';
+import React from 'react'
 
-const CommentsList = ({articleId}) => {
-  const [comments, setComments] = useState([]);
-
-  useEffect(() => {
-    getComments(articleId)
-    .then(response => {
-      if(response) {
-        setComments(response);
-      }
-    });
-  }, [articleId]);
-
+const CommentsList = ({comments}) => {
   return (
     <div>
       {comments && comments.length>0 ?

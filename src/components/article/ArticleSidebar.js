@@ -10,13 +10,13 @@ export const ArticleSidebar = () => {
             <Link to="/articles">All articles</Link>
           </li>
           <li>
-            <Link to="/articles/your-articles">Your articles</Link>
+            <Link to="/articles/my-articles">My articles</Link>
           </li>
           <li>
-            <Link to="/articles/archived">Your archived articles</Link>
+            <Link to="/articles/archived">My archived articles</Link>
           </li>
           <li>
-            <Link to="/articles/new">Create your new article</Link>
+            <Link to="/articles/new">New article</Link>
           </li>
         </ul>
       </nav>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { loginUser } from '../../utils/handle_api_calls';
+import { post } from '../../utils/api_calls/handle_api_calls';
 import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
@@ -18,13 +18,14 @@ const LoginForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(formData);
-    loginUser(formData)
+    post('/user/login', formData)
     .then( (response) => {
-      if(response) {
-        const { token, user } = response.data;
-        localStorage.setItem('current_user', JSON.stringify({ user: user, token: token }));
-        navigate("/articles");
-      }
+      const { token, user } = response.data;
+      localStorage.setItem('current_user', JSON.stringify({ user: user, token: token }));
+      navigate("/articles");
+    })
+    .catch(error => {
+      console.log("Error while login: ", error);
     });
   };
 

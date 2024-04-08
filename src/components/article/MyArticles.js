@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import { getMyArticles } from '../../utils/handle_api_calls';
+import { get } from '../../utils/api_calls/handle_api_calls';
 import { Link } from 'react-router-dom';
 import NewButton from './NewButton';
 
@@ -8,12 +8,15 @@ const MyArticles = () => {
   const [articles, setArticles] = useState([]);
 
   useEffect(() => {
-    getMyArticles()
+    get('/articles/current_users_articles')
     .then(response => {
       if(response) {
-        setArticles(response);
+        setArticles(response.data);
       }
-    });
+    })
+    .catch(error => {
+      console.log("Error fetching my articles: ", error);
+    })
   }, []);
 
   return (

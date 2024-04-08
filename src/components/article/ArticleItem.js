@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import DeleteButton from './DeleteButton';
 import EditButton from './EditButton';
-import { getArticle, updateArticle } from '../../utils/handle_api_calls';
+import { get, put } from '../../utils/api_calls/handle_api_calls';
 import MakePrivateButton from './MakePrivateButton';
 import MakePublicButton from './MakePublicButton';
 import ArchiveButton from './ArchiveButton';
@@ -14,6 +14,7 @@ import CommentsList from '../comment/CommentsList';
 
 function ArticleItem() {
   const [article, setArticle] = useState(null);
+  const [comments, setComments] = useState([]);
 
   const navigate = useNavigate();
 
@@ -21,28 +22,45 @@ function ArticleItem() {
   const articleId = params.articleId;
 
   useEffect(() => {
-    getArticle(articleId)
+    get(`/articles/${articleId}`)
     .then(response => {
-      setArticle(response);
+      setArticle(response.data);
     })
     .catch(error => {
       console.error('Error fetching article:', error);
+    });
+
+    get(`/articles/${articleId}/comments`)
+    .then(response => {
+      if(response) {
+        setComments(response.data);
+      }
+    })
+    .catch(error => {
+      console.log("Error while fetching the comments: ", error);
     });
   }, [articleId]);
 
   const changeArticleStatus = async(newStatus) => {
     const inputs = {status: newStatus};
-    updateArticle(article.id, inputs)
-    .then((updatedArticle) => {
+    
+    put(`/articles/${article.id}`, inputs)
+    .then((response) => {
+      const updatedArticle = response.data;
       setArticle(updatedArticle);
       if(updatedArticle.status === 'archived'){
         navigate("/articles");
       }
+    })
+    .catch(error => {
+      console.log("Error updating the status of article: ", error);
     });
   }
 
-  const renderArticleItem = () => {
-    window.location.reload();
+  const addNewComment = (lastAddedComment) => {
+    let newCommentslist = [...comments];
+    newCommentslist.unshift(lastAddedComment);
+    setComments(newCommentslist);    
   }
 
   return (
@@ -60,8 +78,8 @@ function ArticleItem() {
               <ArchiveButton handleClick={() => changeArticleStatus('archived')} />
             </>
           )}
-          <AddComment articleId={article.id} onCommentAdded={renderArticleItem} />
-          <CommentsList articleId={article.id} />
+          <AddComment articleId={article.id} onCommentAdded={addNewComment} />
+          <CommentsList comments={comments} />
         </>
       )}
     </div>

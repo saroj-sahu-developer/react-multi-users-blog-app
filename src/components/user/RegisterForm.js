@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { registerUser } from '../../utils/handle_api_calls';
+import { post } from '../../utils/api_calls/handle_api_calls';
 import { useNavigate } from 'react-router-dom';
 
 function RegisterForm() {
@@ -19,13 +19,14 @@ function RegisterForm() {
     e.preventDefault();
     console.log(formData);
     validateForm();
-    registerUser(formData)
+    post('/user/register', formData)
     .then( (response) => {
-      if(response) {
-        const { token } = response.data;
-        localStorage.setItem('token', token);
-        navigate('/articles');
-      }
+      const { token } = response.data;
+      localStorage.setItem('token', token);
+      navigate('/articles');
+    })
+    .catch(error => {
+      console.log("Error while registering user: ", error);
     });
   };
 

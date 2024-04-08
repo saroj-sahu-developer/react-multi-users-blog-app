@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
-import { getArchivedArticles } from '../../utils/handle_api_calls';
+import { get } from '../../utils/api_calls/handle_api_calls';
 import DeleteButton from './DeleteButton';
 import UnarchiveButton from './UnarchiveButton';
 
@@ -8,11 +8,14 @@ const ArchivedArticles = () => {
   const [articles, setArticles] = useState([]);
 
   useEffect(() => {
-    getArchivedArticles()
+    get('/articles/get_archived')
     .then(response => {
       if(response) {
-        setArticles(response);
+        setArticles(response.data);
       }
+    })
+    .catch(error => {
+      console.log("Error while fetching archived articles: ", error);
     });
   }, []);
 

@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom'; 
-import { getAllArticles } from '../../utils/handle_api_calls';
+import { get } from '../../utils/api_calls/handle_api_calls';
 
 function ArticleList() {
   console.log("component ArticleList rendered.");
   const [articles, setArticles] = useState([]);
 
   useEffect(() => {
-    getAllArticles()
-    .then(response => {
-      if(response) {
-        setArticles(response);
-      }
-    });
+    get("/articles")
+      .then((response) => {
+        setArticles(response.data);
+      })
+      .catch((error) => {
+        console.log("Error while fetching articles: ", error);
+      })
   }, []);
 
   return (

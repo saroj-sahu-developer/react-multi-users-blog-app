@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { updateArticle, createArticle } from "../../utils/handle_api_calls";
+import { post, put } from "../../utils/api_calls/handle_api_calls";
 
 function ArticleForm({ article }) {
   console.log('ArticleForm rendered.')  
@@ -25,16 +25,23 @@ function ArticleForm({ article }) {
     console.log(inputs);
     if (article) {
       // If editing an existing article
-      updateArticle(article.id, inputs)
+      put(`/articles/${article.id}`, inputs)
       .then( () => {
         navigate(`/articles/${article.id}`);
+      })
+      .catch(error => {
+        console.log("Error while updating the article: ", error);
       });
     } else {
       // If creating a new article
-      createArticle(inputs)
-      .then(newArticle => {
+      post('/articles', inputs)
+      .then(response => {
+        const newArticle = response.data;
         navigate(`/articles/${newArticle.id}`);
       })
+      .catch(error => {
+        console.log("Error while creating the article: ", error);
+      });
     }  
   };
 

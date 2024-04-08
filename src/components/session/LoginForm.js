@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { loginUser } from '../../utils/handle_api_calls';
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
   const [formData, setFormData] = useState({});
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -17,8 +20,11 @@ const LoginForm = () => {
     console.log(formData);
     loginUser(formData)
     .then( (response) => {
-      const { token } = response.data;
-      localStorage.setItem('token', token);
+      if(response) {
+        const { token, user } = response.data;
+        localStorage.setItem('current_user', JSON.stringify({ user: user, token: token }));
+        navigate("/articles");
+      }
     });
   };
 

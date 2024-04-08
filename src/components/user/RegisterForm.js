@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { registerUser } from '../../utils/handle_api_calls';
+import { useNavigate } from 'react-router-dom';
 
 function RegisterForm() {
   const [formData, setFormData] = useState({});
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -18,8 +21,11 @@ function RegisterForm() {
     validateForm();
     registerUser(formData)
     .then( (response) => {
-      const { token } = response.data;
-      localStorage.setItem('token', token);
+      if(response) {
+        const { token } = response.data;
+        localStorage.setItem('token', token);
+        navigate('/articles');
+      }
     });
   };
 

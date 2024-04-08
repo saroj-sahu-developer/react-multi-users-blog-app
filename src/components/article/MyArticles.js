@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom'; 
-import { getAllArticles } from '../../utils/handle_api_calls';
+import React, {useEffect, useState} from 'react'
+import { getMyArticles } from '../../utils/handle_api_calls';
+import { Link } from 'react-router-dom';
+import NewButton from './NewButton';
 
-function ArticleList() {
-  console.log("component ArticleList rendered.");
+
+const MyArticles = () => {
   const [articles, setArticles] = useState([]);
 
   useEffect(() => {
-    getAllArticles()
+    getMyArticles()
     .then(response => {
       if(response) {
         setArticles(response);
@@ -17,7 +18,7 @@ function ArticleList() {
 
   return (
     <div>
-      <h1>Articles</h1>
+      <h1>Your articles</h1>
       {articles && articles.length>0 ?
       (<ul>
         {articles.map(article => (
@@ -29,8 +30,9 @@ function ArticleList() {
       :
       (<p>No article found.</p>)
       }
+      <NewButton />
     </div>
   );
 }
 
-export default ArticleList;
+export default MyArticles;

@@ -1,8 +1,9 @@
 import axios from 'axios';
 import { API_BASE_URL } from '../constants';
+import { authenticationToken } from './get_values_from_local_storage';
 
 const setTokenInHeader = (() => {
-  axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
+  axios.defaults.headers.common['Authorization'] = authenticationToken;
 })
 
 // const api = axios.create({
@@ -46,8 +47,6 @@ export const loginUser = async(loginDetails) => {
   }
 }
 
-
-
 export const getArticle = (articleId) => {
   setTokenInHeader();
   return axios
@@ -78,12 +77,36 @@ export const getAllArticles = () => {
     });
 }
 
+export const getArchivedArticles = () => {
+  setTokenInHeader();
+  return axios
+    .get(`${API_BASE_URL}/articles/get_archived`)
+    .then(response => {
+      return response.data;
+    })
+    .catch(error => {    
+      console.log(error);
+    });
+}
+
+export const getMyArticles = () => {
+  setTokenInHeader();
+  return axios
+    .get(`${API_BASE_URL}/articles/current_users_articles`)
+    .then(response => {
+      return response.data;
+    })
+    .catch(error => {    
+      console.log(error);
+    });
+}
+
 export const updateArticle = async(articleId, inputs) => {
   setTokenInHeader();
   try {
-    await axios.put(`${API_BASE_URL}/articles/${articleId}`, inputs)
+    return await axios.put(`${API_BASE_URL}/articles/${articleId}`, inputs)
     .then(response => {
-      console.log(response);
+      return response.data;
     });
   } catch (error) {
     console.log('Error updating article:', error);
@@ -109,6 +132,30 @@ export const deleteArticle = async(articleId) => {
   } catch (error) {
     console.log('Error creating article:', error);
   }
+}
+
+export const createComment = async(articleId, inputs) => { 
+  setTokenInHeader();
+  try {
+    return await axios.post(`${API_BASE_URL}/articles/${articleId}/comments`, inputs)
+    .then(response => {
+      return response.data;
+    });
+  } catch (error) {
+    console.log('Error creating article:', error);
+  }
+}
+
+export const getComments = (articleId) => {
+  setTokenInHeader();
+  return axios
+    .get(`${API_BASE_URL}/articles/${articleId}/comments`)
+    .then(response => {
+      return response.data;
+    })
+    .catch(error => {    
+      console.log(error);
+    });
 }
 
 

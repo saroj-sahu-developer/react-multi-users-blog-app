@@ -5,6 +5,7 @@ import { post, put } from "../../utils/api_calls/handle_api_calls";
 function ArticleForm({ article }) {
   console.log('ArticleForm rendered.')  
   const [inputs, setInputs] = useState({});
+  const [error, setError] = useState({});
 
   useEffect(() => {
     if(article) {
@@ -22,7 +23,11 @@ function ArticleForm({ article }) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(inputs);
+    
+    if(!validateForm()) {
+      return;
+    }
+
     if (article) {
       // If editing an existing article
       put(`/articles/${article.id}`, inputs)
@@ -45,6 +50,26 @@ function ArticleForm({ article }) {
     }  
   };
 
+  const validateForm = () => {
+    const errors = {};
+  
+    if (!inputs.title.trim()) {
+      errors.title = 'Title is required';
+    } else if (inputs.title > 100) {
+      errors.title = 'Title should be maximum 100 characters length.';
+    }
+
+    if (!inputs.body.trim()) {
+      errors.body = 'Body is required';
+    } else if (inputs.body > 200) {
+      errors.body = 'Body should be maximum 200 characters length.';
+    }
+
+    setError(errors);
+
+    return Object.keys(errors).length === 0;
+  }
+
   return (
     <form onSubmit={handleSubmit}>
       <div>
@@ -57,6 +82,7 @@ function ArticleForm({ article }) {
             onChange={handleChange}
           />
         </label>
+        {error.title && <div>{error.title}</div>}
       </div>
 
       <div>
@@ -68,6 +94,7 @@ function ArticleForm({ article }) {
             onChange={handleChange}
           />
         </label>
+        {error.body && <div>{error.body}</div>}
       </div>
 
       <div>

@@ -2,7 +2,6 @@ import React, {useState} from 'react'
 import { post } from '../../utils/api_calls/handle_api_calls';
 
 const AddComment = ({articleId, onCommentAdded}) => {
-  // console.log("add comment rendered.");
   const [comment, setComment] = useState('');
 
   const handleChange = (e) => {
@@ -11,7 +10,7 @@ const AddComment = ({articleId, onCommentAdded}) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // console.log(comment);
+
     post(`/articles/${articleId}/comments`, {body: comment})
     .then((response) => {
       onCommentAdded(response.data);
@@ -30,7 +29,7 @@ const AddComment = ({articleId, onCommentAdded}) => {
         placeholder="Add a comment..."
         required
       />
-      <button type="submit">Post</button>
+      <button type="submit" disabled={!comment.trim()}>Post</button>
     </form>
   );
 }

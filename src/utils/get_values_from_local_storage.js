@@ -1,5 +1,13 @@
-const currentUserData = JSON.parse(localStorage.getItem('current_user'));
+let authenticationToken = '';
+let currentUser = {};
 
-export const authenticationToken = currentUserData.token;
+const currentUserDataString = localStorage.getItem('current_user');
 
-export const currentUser = currentUserData.user;
+if (currentUserDataString) {
+  const currentUserData = JSON.parse(currentUserDataString);
+
+  authenticationToken = currentUserData.token;
+  currentUser = currentUserData.user;
+}
+
+export { authenticationToken, currentUser };

@@ -1,21 +1,29 @@
-import React from 'react'
+import React from "react";
+import {
+  CommentsListContainer,
+  CommentItem,
+  NoCommentsMessage,
+  Commenter,
+} from "../../styled_components/Comment";
 
-const CommentsList = ({comments}) => {
+const CommentsList = ({ comments }) => {
+  console.log(comments);
   return (
-    <div>
-      {comments && comments.length>0 ?
-      (<ul>
-        {comments.map(comment => (
-          <li key={comment.id}>
-            {comment.body}
-          </li>
-        ))}
-      </ul>)
-      :
-      (<p>No comment yet...</p>)
-      }
-    </div>
+    <CommentsListContainer>
+      {comments && comments.length > 0 ? (
+        <ul>
+          {comments.map((comment) => (
+            <li key={comment.id}>
+              <Commenter>@{comment.commenter}</Commenter>
+              <CommentItem>{comment.body}</CommentItem>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <NoCommentsMessage>No comments yet...</NoCommentsMessage>
+      )}
+    </CommentsListContainer>
   );
-}
+};
 
 export default CommentsList;

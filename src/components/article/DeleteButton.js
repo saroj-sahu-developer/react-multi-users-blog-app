@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { destroy } from '../../utils/api_calls/handle_api_calls';
+import { StyledDeleteButton } from '../../styled_components/StyledButtons';
 
 function DeleteButton({ articleId}) {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ function DeleteButton({ articleId}) {
   }
 
   return (
-    <button onClick={() => handleDelete(articleId)}>Delete</button>
+    <StyledDeleteButton onClick={() => handleDelete(articleId)}>Delete</StyledDeleteButton>
   );
 }
 

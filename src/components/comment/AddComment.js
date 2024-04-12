@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import { post } from '../../utils/api_calls/handle_api_calls';
-
+import { StyledForm, StyledTextarea , StyledButton } from '../../styled_components/Comment';
 const AddComment = ({articleId, onCommentAdded}) => {
   const [comment, setComment] = useState('');
 
@@ -22,15 +22,15 @@ const AddComment = ({articleId, onCommentAdded}) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <textarea
+    <StyledForm onSubmit={handleSubmit}>
+      <StyledTextarea
         value={comment}
         onChange={handleChange}
         placeholder="Add a comment..."
         required
       />
-      <button type="submit" disabled={!comment.trim()}>Post</button>
-    </form>
+      <StyledButton type="submit" disabled={!comment.trim()}>Post</StyledButton>
+    </StyledForm>
   );
 }
 

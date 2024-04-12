@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { post, put } from "../../utils/api_calls/handle_api_calls";
+import { StyledForm, FormLabel, FormInput, FormTextarea, FormSubmitButton } from "../../styled_components/StyledForm";
 
 function ArticleForm({ article }) {
   console.log('ArticleForm rendered.')  
@@ -71,44 +72,37 @@ function ArticleForm({ article }) {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <StyledForm onSubmit={handleSubmit}>
       <div>
-        <label>
+        <FormLabel>
           Title:
-          <input
+          <FormInput
             type="text"
             name="title"
             value={inputs.title || ''}
             onChange={handleChange}
           />
-        </label>
+        </FormLabel>
         {error.title && <div>{error.title}</div>}
       </div>
 
       <div>
-        <label>
+        <FormLabel>
           Body:
-          <textarea
+          <FormTextarea
             name="body"
             value={inputs.body || ''}
             onChange={handleChange}
           />
-        </label>
+        </FormLabel>
         {error.body && <div>{error.body}</div>}
       </div>
 
       <div>
-        <input type="submit" />
+        <FormSubmitButton type="submit">Save</FormSubmitButton>
       </div>
-    </form>
+    </StyledForm>
   );
 }
 
 export default ArticleForm;
-
-// const Title = styled.h1`
-//   font-size: 1.5em;
-//   text-align: center;
-//   color: ${props => props.$color || "#BF4F74"};
-// `;
-

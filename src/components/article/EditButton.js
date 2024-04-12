@@ -1,10 +1,11 @@
 import { useNavigate } from 'react-router-dom';
+import { StyledEditButton } from '../../styled_components/StyledButtons';
 
 function EditButton({ articleId}) {
   const navigate = useNavigate();
 
   return (
-    <button onClick={() => navigate(`/articles/${articleId}/edit`)}>Edit</button>
+    <StyledEditButton onClick={() => navigate(`/articles/${articleId}/edit`)}>Edit</StyledEditButton>
   );
 }
 

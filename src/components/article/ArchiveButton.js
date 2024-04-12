@@ -1,8 +1,9 @@
 import React from 'react'
+import { StyledArchiveButton } from '../../styled_components/StyledButtons';
 
 const ArchiveButton = ({handleClick}) => {
   return (
-    <button onClick={() => handleClick()}>Archive</button>
+    <StyledArchiveButton onClick={() => handleClick()}>Archive</StyledArchiveButton>
   );
 }
 

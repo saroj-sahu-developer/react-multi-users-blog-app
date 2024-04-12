@@ -1,6 +1,7 @@
 import React from 'react'
 import { put } from '../../utils/api_calls/handle_api_calls';
 import { useNavigate } from 'react-router-dom';
+import { StyledUnarchiveButton } from '../../styled_components/StyledButtons';
 
 const UnarchiveButton = ({articleId}) => {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ const UnarchiveButton = ({articleId}) => {
   }
 
   return (
-    <button onClick={() => handleClick()}>Unarchive</button>
+    <StyledUnarchiveButton onClick={() => handleClick()}>Unarchive</StyledUnarchiveButton>
   );
 }
 

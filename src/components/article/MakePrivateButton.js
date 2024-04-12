@@ -1,8 +1,9 @@
 import React from 'react'
+import { StyledMakePrivateButton } from '../../styled_components/StyledButtons';
 
 const MakePrivateButton = ({handleClick}) => {
   return (
-    <button onClick={() => handleClick()}>Make Private</button>
+    <StyledMakePrivateButton onClick={() => handleClick()}>Make Private</StyledMakePrivateButton>
   );
 }
 
